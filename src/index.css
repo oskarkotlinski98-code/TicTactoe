@@ -1,0 +1,236 @@
+:root {
+  --paper: #f4f0e6;
+  --paper-line: #d9cfb8;
+  --ink: #2b2a28;
+  --ink-soft: #6b6558;
+  --x-ink: #2a4d7a;
+  --o-ink: #a63b26;
+  --win: #3f7d4c;
+  --radius: 4px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--paper-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+  background-size: 28px 28px;
+  color: var(--ink);
+  min-height: 100vh;
+  font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+}
+
+.page {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 48px 20px 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.masthead {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.masthead-eyebrow {
+  display: block;
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+
+.masthead h1 {
+  margin: 0;
+  font-size: 2.1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.status-row {
+  margin: 18px 0 22px;
+  min-height: 24px;
+}
+
+.status-text {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  border-bottom: 1px dashed var(--paper-line);
+  padding-bottom: 4px;
+}
+
+.status-text--done {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.board {
+  --gap: 3px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+  width: min(88vw, 340px);
+  aspect-ratio: 1 / 1;
+  background: var(--ink);
+  border-radius: var(--radius);
+  padding: var(--gap);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.cell {
+  background: var(--paper);
+  border: none;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14%;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.cell:disabled {
+  cursor: default;
+}
+
+.cell:not(:disabled):hover {
+  background: #eee7d6;
+}
+
+.cell--win {
+  background: #e4efe6;
+}
+
+.mark {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke-linecap: round;
+  stroke-width: 9;
+}
+
+.mark-x {
+  stroke: var(--x-ink);
+}
+
+.mark-x line {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: draw 0.28s ease forwards;
+}
+
+.mark-x line:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.mark-o {
+  stroke: var(--o-ink);
+}
+
+.mark-o circle {
+  stroke-dasharray: 214;
+  stroke-dashoffset: 214;
+  animation: draw-o 0.4s ease forwards;
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes draw-o {
+  to { stroke-dashoffset: 0; }
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.btn {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.15s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+}
+
+.btn-primary:hover {
+  background: #45433e;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid var(--paper-line);
+}
+
+.btn-ghost:hover {
+  border-color: var(--ink-soft);
+  color: var(--ink);
+}
+
+.tally {
+  margin-top: 34px;
+  border-collapse: collapse;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.85rem;
+  min-width: 220px;
+}
+
+.tally th,
+.tally td {
+  border: 1px solid var(--paper-line);
+  padding: 8px 18px;
+  text-align: center;
+}
+
+.tally th {
+  color: var(--ink-soft);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.tally td {
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark-x line,
+  .mark-o circle {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
